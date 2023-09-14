@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -68,4 +69,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     // coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+    // room
+    val roomVersion = "2.5.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 }
