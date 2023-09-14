@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PaginationStories</string>
+    <string name="icon_button_close">Icon button close</string>
 </resources>
