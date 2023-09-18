@@ -14,10 +14,13 @@ import ru.veresov.paginationstories.data.database.entity.StoryEntity
 @Dao
 interface StoryEntityDao {
     @Update
-    suspend fun markStoryAsViewed(entity: StoryEntity)
+    suspend fun update(entity: StoryEntity)
 
     @Query("select * from story")
     fun readStories(): Flow<List<StoryEntity>>
+
+    @Query("select * from story where preview = :preview")
+    suspend fun getStoryBy(preview: String): StoryEntity?
 
     @Insert
     suspend fun insert(entity: StoryEntity)
