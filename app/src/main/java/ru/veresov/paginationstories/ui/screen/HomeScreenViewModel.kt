@@ -1,18 +1,18 @@
-package ru.veresov.paginationstories
+package ru.veresov.paginationstories.ui.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ru.veresov.paginationstories.data.database.model.Story
 import ru.veresov.paginationstories.data.database.repository.StoryRepository
-import ru.veresov.paginationstories.model.Story
 
 /**
  * @author Veresov Yuriy
- * @date 15.09.2023
+ * @date 02.10.2023
  */
-class MainActivityViewModel(
+class HomeScreenViewModel(
     private val repository: StoryRepository
 ) : ViewModel() {
 
@@ -22,15 +22,12 @@ class MainActivityViewModel(
         }
     val allStories get() = _allStories
 
-    fun markStoryAsViewed(preview: String) {
+    fun initStories() {
         viewModelScope.launch {
-            repository.markStoryAsViewed(preview)
-        }
-    }
-
-    fun insert(story: Story) {
-        viewModelScope.launch {
-            repository.insert(story)
+            _allStories.collect {
+                if (repository.stories.isEmpty())
+                    repository.setList(it)
+            }
         }
     }
 }

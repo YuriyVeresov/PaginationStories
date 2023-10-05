@@ -1,20 +1,15 @@
-package ru.veresov.paginationstories
+package ru.veresov.paginationstories.util
 
-import android.app.Activity
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,23 +20,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import ru.veresov.paginationstories.util.SegmentedProgressBar
+import ru.veresov.paginationstories.R
 
 /**
  * @author Veresov Yuriy
  * @date 14.09.2023
  */
 private const val DURATION = 5000
-private const val TAG = "StoryContentDebug"
 
 @Composable
 fun StoryContent(
@@ -49,6 +42,7 @@ fun StoryContent(
     images: List<String>,
     toNextStory: () -> Unit,
     toPreviousStory: () -> Unit,
+    onClose: () -> Unit,
     page: Int,
     currentPage: Int
 ) {
@@ -127,43 +121,19 @@ fun StoryContent(
                         }
 
                     }
-                    val context = LocalContext.current
                     IconButton(
                         onClick = {
-                            (context as? Activity)?.finish()
+                            onClose()
                         },
                         content = {
                             Image(
                                 modifier = Modifier.size(36.dp),
-                                imageVector = Icons.Rounded.Close,
-                                contentDescription = stringResource(R.string.icon_button_close),
-                                contentScale = ContentScale.FillWidth,
-                                colorFilter = ColorFilter.tint(Color.White)
+                                painter = painterResource(id = R.drawable.ic_close),
+                                contentDescription = stringResource(R.string.icon_close),
+                                contentScale = ContentScale.FillWidth
                             )
                         })
                 }
             )
         })
-}
-
-@Preview
-@Composable
-fun PreviewStoryContent() {
-    StoryContent(
-        modifier = Modifier.fillMaxSize(), listOf(
-            "",
-            "",
-            "",
-            "",
-            ""
-        ),
-        toNextStory = {
-            Log.i(TAG, "launch to next story")
-        },
-        toPreviousStory = {
-            Log.i(TAG, "return to previous story")
-        },
-        0,
-        0
-    )
 }
