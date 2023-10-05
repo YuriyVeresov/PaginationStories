@@ -1,8 +1,7 @@
 package ru.veresov.paginationstories.data.database.repository
 
 import ru.veresov.paginationstories.data.database.dao.StoryEntityDao
-import ru.veresov.paginationstories.data.database.entity.StoryEntity
-import ru.veresov.paginationstories.model.Story
+import ru.veresov.paginationstories.data.database.model.Story
 
 /**
  * @author Veresov Yuriy
@@ -11,12 +10,13 @@ import ru.veresov.paginationstories.model.Story
 class StoryRepository(
     private val dao: StoryEntityDao
 ) {
+    var stories: List<Story> = listOf()
+
+    fun setList(list: List<Story>) {
+        stories = list
+    }
 
     fun getStoriesFlow() = dao.readStories()
-
-    suspend fun insert(story: Story) {
-        dao.insert(StoryEntity(0, story.preview, story.content, story.isViewed))
-    }
 
     suspend fun markStoryAsViewed(preview: String) {
         val story = dao.getStoryBy(preview)

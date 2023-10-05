@@ -3,7 +3,7 @@ package ru.veresov.paginationstories.data.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.veresov.paginationstories.model.Story
+import ru.veresov.paginationstories.data.database.model.Story
 
 /**
  * @author Veresov Yuriy

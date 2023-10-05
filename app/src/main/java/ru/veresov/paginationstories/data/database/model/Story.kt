@@ -1,4 +1,4 @@
-package ru.veresov.paginationstories.model
+package ru.veresov.paginationstories.data.database.model
 
 /**
  * @author Veresov Yuriy
